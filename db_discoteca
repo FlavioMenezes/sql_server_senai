@@ -1,0 +1,41 @@
+CREATE DATABASE db_discoteca
+ON PRIMARY (
+NAME = db_discoteca,
+FILENAME = 'C:\SQL SERVER\db_discoteca.MDF',
+SIZE = 8MB,
+MAXSIZE = 20MB,
+FILEGROWTH = 15%
+);
+
+USE db_discoteca
+GO
+
+CREATE TABLE gravadora (
+	id_gravadora INTEGER PRIMARY KEY,
+	nome CHAR(30) NOT NULL
+);
+
+CREATE TABLE artista (
+	id_artista INTEGER PRIMARY KEY,
+	nome CHAR(35) NOT NULL,
+	idade INT
+);
+
+CREATE TABLE disco (
+	id_disco INTEGER PRIMARY KEY NOT NULL,
+	titulo_disco CHAR(35) NOT NULL UNIQUE,
+	minutos INT,
+	ano_lancamento DATE,
+	id_artista INTEGER,
+	id_gravadora INTEGER,
+	CONSTRAINT id_artista FOREIGN KEY (id_artista) REFERENCES artista(id_artista),
+	CONSTRAINT id_gravadora FOREIGN KEY (id_gravadora) REFERENCES gravadora(id_gravadora)
+);
+
+CREATE TABLE musica (
+	id_musica INTEGER PRIMARY KEY,
+	nome CHAR(35),
+	temp_musica DECIMAL(4, 2),
+	id_disco INTEGER NOT NULL,
+	CONSTRAINT id_disco FOREIGN KEY (id_disco) REFERENCES disco(id_disco)
+);

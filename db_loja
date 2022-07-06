@@ -1,0 +1,46 @@
+CREATE DATABASE db_loja
+ON PRIMARY (
+NAME = db_loja,
+FILENAME = 'C:\SQL SERVER\db_loja.MDF',
+SIZE = 8MB,
+MAXSIZE = 20MB,
+FILEGROWTH = 15%
+);
+
+
+USE db_loja;
+
+CREATE TABLE estoque (
+	codigo_estoque INTEGER PRIMARY KEY,
+	qtd_estoque INTEGER NOT NULL
+);
+
+CREATE TABLE loja (
+	codigo_loja INTEGER PRIMARY KEY,
+	nome CHAR(35) NOT NULL,
+	CNPJ INTEGER NOT NULL UNIQUE
+);
+
+CREATE TABLE cliente (
+	codigo_cliente INTEGER PRIMARY KEY,
+	nome CHAR(35) NOT NULL,
+	CPF INTEGER NOT NULL UNIQUE
+);
+
+CREATE TABLE venda (
+	num_nota INTEGER PRIMARY KEY,
+	dt_venda DATE NOT NULL,
+	valor_total DECIMAL(6,2) NOT NULL,
+	codigo_cliente INTEGER,
+	codigo_loja INTEGER,
+	CONSTRAINT codigo_cliente FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente),
+	CONSTRAINT codigo_loja FOREIGN KEY (codigo_loja) REFERENCES loja(codigo_loja)
+);
+
+CREATE TABLE PRODUTO (
+	codigo_produto INTEGER PRIMARY KEY,
+	preco DECIMAL(6,2) NOT NULL,
+	qtd INTEGER NOT NULL,
+	num_nota INTEGER,
+	CONSTRAINT num_nota FOREIGN KEY (num_nota) REFERENCES venda(num_nota)
+);

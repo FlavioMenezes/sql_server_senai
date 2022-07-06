@@ -1,0 +1,29 @@
+CREATE DATABASE db_biblioteca
+ON PRIMARY (
+NAME = db_biblioteca,
+FILENAME = 'C:\SQL SERVER\db_biblioteca.MDF',
+SIZE = 8MB,
+MAXSIZE = 20MB,
+FILEGROWTH = 15%
+);
+
+CREATE TABLE Autor (
+	ID_autor INTEGER NOT NULL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	sobrenome VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Editora (
+	ID_editora INTEGER NOT NULL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Livro ( 
+	ID_livro INTEGER PRIMARY KEY NOT NULL,
+	nome VARCHAR(50) NOT NULL,
+	ISBN VARCHAR(30) NOT NULL UNIQUE,
+	dt_publicacao DATE NOT NULL,
+	preco_livro MONEY NOT NULL,
+	fk_Autor_ID_autor INTEGER NOT NULL,
+	CONSTRAINT fk_Autor_ID_autor FOREIGN KEY (fk_Autor_ID_autor) REFERENCES Autor(ID_autor)
+);
