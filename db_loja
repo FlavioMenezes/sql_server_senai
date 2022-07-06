@@ -37,7 +37,7 @@ CREATE TABLE venda (
 	CONSTRAINT codigo_loja FOREIGN KEY (codigo_loja) REFERENCES loja(codigo_loja)
 );
 
-CREATE TABLE PRODUTO (
+CREATE TABLE produto (
 	codigo_produto INTEGER PRIMARY KEY,
 	preco DECIMAL(6,2) NOT NULL,
 	qtd INTEGER NOT NULL,
