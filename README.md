@@ -1,4 +1,5 @@
 Este é o repositório do curso de SQL SERVER do SENAI
+Neste repositório, terá o BACKUP dos códigos do Banco e seus INSERTS.
 
 
 Comandos básicos git:

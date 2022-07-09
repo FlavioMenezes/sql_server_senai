@@ -1,0 +1,62 @@
+/* Criando db_loja CORRETO */
+
+CREATE DATABASE db_loja ON PRIMARY(
+	NAME = db_loja,
+	FILENAME = 'C:\SQL SERVER\db_loja.MDF',
+	SIZE = 8MB,
+	MAXSIZE = 20MB,
+	FILEGROWTH = 15%
+);
+GO
+
+USE db_loja;
+GO
+
+CREATE TABLE cliente (
+	codigo_cliente INT IDENTITY(1,1),
+	nome CHAR(35) NOT NULL,
+	CPF INT NOT NULL,
+	CONSTRAINT PK_codigo_cliente PRIMARY KEY(codigo_cliente),
+	CONSTRAINT UC_CPF UNIQUE (CPF)
+);
+GO
+
+CREATE TABLE loja (
+	codigo_loja INT IDENTITY(1,1),
+	nome CHAR(35) NOT NULL,
+	CNPJ INT NOT NULL,
+	codigo_estoque INT,
+	CONSTRAINT PK_codigo_loja PRIMARY KEY(codigo_loja),
+	CONSTRAINT UC_CNPJ UNIQUE (CNPJ),
+	CONSTRAINT FK_codigo_estoque FOREIGN KEY (codigo_estoque) REFERENCES estoque(codigo_estoque)
+);
+GO
+
+CREATE TABLE estoque (
+	codigo_estoque INT IDENTITY(1,1),
+	qtd_estoque INT NOT NULL,
+	CONSTRAINT PK_codigo_estoque PRIMARY KEY(codigo_estoque)
+);
+GO
+
+CREATE TABLE venda (
+	num_nota INT IDENTITY(1,1),
+	dt_venda DATE NOT NULL,
+	valor_total DECIMAL(6,2),
+	codigo_cliente INT,
+	codigo_loja INT,
+	CONSTRAINT PK_num_nota PRIMARY KEY(num_nota),
+	CONSTRAINT FK_codigo_cliente FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente),
+	CONSTRAINT FK_codigo_loja FOREIGN KEY (codigo_loja) REFERENCES loja(codigo_loja)
+);
+GO
+
+CREATE TABLE produto (
+	codigo_produto INT IDENTITY(1,1),
+	preco DECIMAL(6,2) NOT NULL,
+	qtd INT NOT NULL,
+	num_nota INT,
+	CONSTRAINT PK_codigo_produto PRIMARY KEY(codigo_produto),
+	CONSTRAINT FK_num_nota FOREIGN KEY (num_nota) REFERENCES venda(num_nota)
+);
+GO

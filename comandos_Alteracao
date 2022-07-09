@@ -1,0 +1,94 @@
+sp_help loja;
+
+ALTER TABLE estoque 
+ALTER COLUMN
+qtd_estoque INT NOT NULL
+GO;
+
+ALTER TABLE estoque
+DROP COLUMN qtd_estoque
+GO
+
+ALTER TABLE estoque
+ADD qtd_estoque INT NOT NULL
+GO
+
+ALTER TABLE estoque
+DROP COLUMN codigo_estoque
+GO
+
+ALTER TABLE estoque
+DROP COLUMN codigo_estoque
+GO
+
+ALTER TABLE estoque
+DROP PK__estoque__7B8A8842F39173E2
+GO
+
+ALTER TABLE estoque
+DROP COLUMN codigo_estoque
+GO
+
+ALTER TABLE loja
+DROP PK__loja__542800AF38F6AAAA
+GO
+
+ALTER TABLE venda
+DROP CONSTRAINT codigo_loja;
+GO
+
+sp_help venda;
+
+ALTER TABLE estoque
+ADD codigo_estoque INT PRIMARY KEY NOT NULL
+GO
+
+ALTER TABLE cliente
+DROP CONSTRAINT UQ__cliente__C1F89731840A23A6
+GO
+
+ALTER TABLE cliente 
+ADD UNIQUE (CPF) 
+GO
+
+ALTER TABLE loja
+DROP CONSTRAINT PK__loja__542800AF38F6AAAA
+GO
+
+ALTER TABLE loja
+ADD UNIQUE (CNPJ)
+GO
+
+ALTER TABLE loja
+ADD codigo_loja INT PRIMARY KEY NOT NULL
+GO
+
+ALTER TABLE venda
+ADD CONSTRAINT fk_codigo_loja FOREIGN KEY (codigo_loja) REFERENCES loja(codigo_loja)
+GO
+
+ALTER TABLE venda
+DROP codigo_cliente
+GO
+
+ALTER TABLE venda
+DROP COLUMN codigo_cliente;
+GO
+
+ALTER TABLE venda
+ADD codigo_cliente INT
+CONSTRAINT fk_codigo_cliente FOREIGN KEY (codigo_cliente)
+REFERENCES cliente(codigo_cliente)
+GO
+
+/*Renomear Tabelas 
+*	Dois parâmetros(nome antigo, nome novo)
+*  Renomear Nome de uma Coluna
+*   Terceiro parâmetro -> COLUMN
+		estoque.nome_coluna, novoName, 'COLUMN';
+*/
+sp_rename mercadinho, loja;GO
+
+
+sp_rename 'estoque.qtd_estoque', 'quantidade', 'COLUMN';
+

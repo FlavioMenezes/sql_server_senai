@@ -1,0 +1,91 @@
+/*CRIANDO db_biblioteca CORRETO
+*  COM INSERTS NO FINAL
+*/ 
+
+CREATE DATABASE db_biblioteca ON PRIMARY( 
+	NAME = db_biblioteca,
+	FILENAME = 'C:\SQL SERVER\db_biblioteca.MDF',
+	SIZE = 8MB,
+	MAXSIZE = 20MB,
+	FILEGROWTH = 15%
+);
+GO
+
+USE db_biblioteca;
+GO
+
+CREATE TABLE Autor (
+	ID_autor INT IDENTITY(1,1),
+	nome VARCHAR(50) NOT NULL,
+	sobrenome VARCHAR(50) NOT NULL,
+	CONSTRAINT PK_ID_autor PRIMARY KEY (ID_autor)
+);
+GO
+
+CREATE TABLE Editora (
+	ID_editora INT IDENTITY(1,1),
+	nome VARCHAR(50) NOT NULL,
+	CONSTRAINT PK_ID_Editora PRIMARY KEY (ID_editora)
+);
+GO
+
+CREATE TABLE Livro (
+	ID_livro INT IDENTITY(1,1),
+	nome VARCHAR(50) NOT NULL,
+	ISBN VARCHAR(30) NOT NULL,
+	dt_publicacao DATE NOT NULL,
+	preco_livro MONEY NOT NULL,
+	ID_editora INT,
+	ID_autor INT,
+	CONSTRAINT PK_ID_Livro PRIMARY KEY (ID_livro),
+	CONSTRAINT UC_ISBN UNIQUE (ISBN),
+	CONSTRAINT FK_ID_editora FOREIGN KEY (ID_editora) REFERENCES editora(ID_editora),
+	CONSTRAINT FK_ID_autor FOREIGN KEY (ID_autor) REFERENCES autor(ID_autor)
+);
+GO
+
+/*INSERTS AULA*/
+
+INSERT INTO Editora
+	(nome)
+VALUES
+	('Salamandra'),
+	('Companhia Das Letrinhas'),
+	('Seguinte'),
+	('FTD'),
+	('Moderna'),
+	('Global');
+GO
+
+INSERT INTO Autor
+	(nome, sobrenome)
+VALUES
+	('L. Frank','Baum'),
+	('Jorge', 'Amado'),
+	('Lemony', 'Snicket'),
+	('Antoine', 'de Saint-Exupéry'),
+	('Walcyr', 'Carrasco'),
+	('Orígenes', 'Lessa'),
+	('João', 'Anzanello Carrascoza');
+GO
+
+INSERT INTO Livro
+	(nome, ISBN, ID_autor, ID_editora, dt_publicacao, preco_livro)
+VALUES
+	('O maravilhoso mágico de Oz', '9788516084936', 1, 1, '2013-02-14', 26.90),
+	('O Gato Malhado e a Andorinha Sinhá', '9788574063423',2 ,2 , '2008-08-01', 34.18),
+	('Mau começo', '9788535900941',3 , 3, '2001-03-09', 26.94),
+	('O pequeno príncipe', '9788596004329', 4, 4, '2022-07-31',49.90),
+	('O anjo linguarudo', '8516023168', 5, 5, '1999-01-01',52.85),
+	('Confissões de um vira-lata', '9788526016866', 6, 6, '2012-01-01', 23.21),
+	('Vendedor de sustos', '9788532292827', 7, 4, '2014-01-01', 52.00);
+GO
+
+INSERT INTO Livro
+	(nome, ISBN, ID_autor, dt_publicacao, preco_livro)
+VALUES
+	('Capitães de area', '8535911693', 2, '2008-03-10', 44.99),
+	('A Palavra não Dita', '8516055566', 5, '2007-01-01', 57.00),
+	('Aquela água toda', '8556520235', 7, '2018-02-16', 33.84);
+GO
+

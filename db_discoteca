@@ -26,16 +26,15 @@ CREATE TABLE disco (
 	titulo_disco CHAR(35) NOT NULL UNIQUE,
 	minutos INT,
 	ano_lancamento DATE,
-	id_artista INTEGER,
-	id_gravadora INTEGER,
-	CONSTRAINT id_artista FOREIGN KEY (id_artista) REFERENCES artista(id_artista),
-	CONSTRAINT id_gravadora FOREIGN KEY (id_gravadora) REFERENCES gravadora(id_gravadora)
+	fk_id_artista INTEGER,
+	fk_id_gravadora INTEGER,
+	CONSTRAINT fk_id_artista FOREIGN KEY (fk_id_artista) REFERENCES artista(id_artista),
+	CONSTRAINT fk_id_gravadora FOREIGN KEY (fk_id_gravadora) REFERENCES gravadora(id_gravadora)
 );
-
 CREATE TABLE musica (
 	id_musica INTEGER PRIMARY KEY,
 	nome CHAR(35),
 	temp_musica DECIMAL(4, 2),
-	id_disco INTEGER NOT NULL,
-	CONSTRAINT id_disco FOREIGN KEY (id_disco) REFERENCES disco(id_disco)
+	fk_id_disco INTEGER NOT NULL,
+	CONSTRAINT fk_id_disco FOREIGN KEY (fk_id_disco) REFERENCES disco(id_disco)
 );
